@@ -62,6 +62,11 @@ test("mutation protection requires exact origin and rejects missing, opaque or h
   assert.equal(isSameOriginMutation(make("https://evil.example")), false);
   assert.equal(isSameOriginMutation(make("https://sparelink.example.evil.test")), false);
   assert.equal(isSameOriginMutation(make("https://sparelink.example", "cross-site")), false);
+  assert.equal(isSameOriginMutation(make("https://sparelink.example", "same-site")), false);
+  assert.equal(isSameOriginMutation(make("https://sparelink.example/path")), false);
+  assert.equal(isSameOriginMutation(make("https://user@sparelink.example")), false);
+  assert.equal(isSameOriginMutation(make("https://sparelink.example", "same-origin")), true);
+  assert.equal(isSameOriginMutation(make("https://sparelink.example", "none")), true);
 });
 
 test("admin configuration and ownership fail closed", () => {

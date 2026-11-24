@@ -4,10 +4,10 @@ export function isSameOriginMutation(request: Request): boolean {
   const origin = request.headers.get("origin");
   if (!origin || origin === "null") return false;
   try {
-    if (new URL(origin).origin !== new URL(request.url).origin) return false;
+    if (origin !== new URL(request.url).origin) return false;
   } catch { return false; }
   const site = request.headers.get("sec-fetch-site");
-  return site !== "cross-site";
+  return !site || site === "same-origin" || site === "none";
 }
 
 export function isAdminEmail(email: string | null | undefined, configured: unknown): boolean {

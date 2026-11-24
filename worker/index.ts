@@ -1,4 +1,5 @@
 import handler from "vinext/server/fetch-handler";
+import { hardenResponse } from "../lib/http-security";
 import { runWithConnectorBinding } from "../lib/connector-context";
 import type { ConnectorBinding } from "../lib/connector-contract.mjs";
 
@@ -24,17 +25,7 @@ const worker = {
       };
     }
     const response = await runWithConnectorBinding(binding, () => handler.fetch(request, env, ctx));
-    // Preserve streaming bodies and upgrade responses; never cache authenticated pages.
-    if (response.status === 101) return response;
-    const headers = new Headers(response.headers);
-    headers.set("X-Content-Type-Options", "nosniff");
-    headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-    headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
-    const path = new URL(request.url).pathname;
-    if (path.startsWith("/api/") || path.startsWith("/workspace") || path.startsWith("/admin")) {
-      headers.set("Cache-Control", "private, no-store");
-    }
-    return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+    return hardenResponse(request, response);
   },
 };
 
