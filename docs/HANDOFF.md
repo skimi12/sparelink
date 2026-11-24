@@ -10,7 +10,9 @@ SpareLink（廃番・長納期部品の企業間調達）を実装し、GitHub�
 
 - Sites project_id: `appgprj_6b05a7c5b62c8191a48a3e2f8504b1e2`
 - ローカルチェックアウト: `/workspace/sites/sparelink`
-- 予定GitHub repository: `skimi12/sparelink`。初回開始時は存在せず、まだ投稿成功を確認していない。
+- 公開GitHub repository: https://github.com/skimi12/sparelink
+- 初回コード投稿commit: `509397b2204a020e4f7c197bff2cfa829f2e41cc`。mainへの反映と、Sites側コードとの全151ファイルのtree hash一致を確認済み。
+- SitesとGitHubには別々のコミット履歴がある。GitHubへ反映するときは現在のmainを読み、親コミットとexpected_shaを固定して更新する。履歴の強制上書きをしない。
 - Sitesの同一project_idに紐づくソースGitを保存先とする。ローカルが失われたらSitesスキルのソース取得手順で復元する。
 - 新しいSiteを重複作成しない。資格情報をソース/ログ/引継ぎへ書かない。
 
@@ -36,11 +38,12 @@ Vinext + React + TypeScript + Cloudflare D1。Sitesが提供するChatGPTサイ�
 - 2026-11-25 00:20 JSTに初版のデプロイ成功を確認。公開デモ・一般実受付停止。
 - 初版のコードcommit: `1fe3789d03968ac4461ce57172c533b4fc2984ad`（以降の差分は検証記録更新）。
 - 専用URLでサンプルフォームの非送信確認、実情報0件、未ログインworkspaceを確認。本番D1の3表を管理APIで確認。
-- GitHub投稿と定期実行は下記の理由で未完了。『公開済み』からこれらまで完了したと推論しない。
+- GitHub投稿は完了。初回コードcommitのGitHub Actionsも成功: https://github.com/skimi12/sparelink/actions/runs/45426652875
+- 定期実行は下記の上限のため未設定。公開と収益化・定期実行を混同しない。
 
 ## 初回で判明した外部の障害
 
-1. GitHub連携ではアカウントと既存リポジトリの読み書きは可能だが、新規リポジトリ作成機能がない。CLIは未ログイン、ブラウザの新規作成画面はログインを要求した。新規リポジトリ作成に必要な利用者操作が残る。無関係な既存リポジトリへ投稿して代替しない。
+1. GitHubの新規リポジトリ作成は当初ログインで止まったが、安全な認証後に公開repo作成とコード投稿を完了した。追加のGitHubログインが常に必要と誤って案内しない。今後は既存リポジトリをGitHub連携で更新する。
 2. 毎時の定期タスク作成は `too_many_active_automations`（現在の上限20件）で拒否された。SpareLinkの新規定期タスクは作成されていない。既存タスクを停止・置換するにはユーザーの選択が必要。別の機能から同じ上限を回避しない。
 
 ## 毎回の作業

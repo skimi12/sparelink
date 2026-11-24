@@ -16,7 +16,8 @@
 | 公開 | 初版のデプロイ成功。専用URLをブラウザでも確認 |
 | 一般実受付 | サーバー設定false。一般登録拒否と管理者テスト分離を検証 |
 | 定期タスク | 20件上限により新規作成拒否。未設定 |
-| GitHub | 既存リポジトリへの接続は確認。新規repo作成には利用者の認証が必要。未投稿 |
+| GitHub | 公開repo作成・151ファイル投稿・mainへの反映を確認。初回コードcommit `509397b2204a020e4f7c197bff2cfa829f2e41cc`、Sitesとtree hash一致 |
+| GitHub Actions | 初回コードcommitのCI成功。型検査・21テスト・build。実行URL: https://github.com/skimi12/sparelink/actions/runs/45426652875 |
 
 ## 21テストの対象
 
